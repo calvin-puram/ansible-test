@@ -1,0 +1,3 @@
+composable_releases: "https://api.github.com/repos/{{composable_repository}}/releases/latest"
+composable_repository: "ComposableFi/composable"
+composable_node_version: "latest"

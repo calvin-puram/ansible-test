@@ -1,0 +1,23 @@
+- name: Composable Binary Version
+  block:
+    - name: Get repository version
+      uri:
+        url: "{{ composable_releases }}"
+        method: GET
+        status_code: 200
+      register: composable_version
+
+    - name: Set fact for release
+      set_fact:
+        composable_latest_version: "{{ composable_version.json.tag_name }}"
+  when:
+    - composable_node_version == 'latest'
+    - composable_repository != ""
+
+- name: Download composable using get_url
+  # become_user: composable
+  become: true
+  get_url:
+    url: https://github.com/ComposableFi/composable/releases/download/{{composable_latest_version}}/composable
+    dest: /usr/local/bin
+    mode: 0755
